@@ -1,0 +1,1 @@
+INSERT into users(username,email,password,role) values('adrian','adrian@prueba.es','1234','admin')
