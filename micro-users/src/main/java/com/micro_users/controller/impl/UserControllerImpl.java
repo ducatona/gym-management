@@ -31,22 +31,20 @@ public class UserControllerImpl implements IUserController {
         return ResponseEntity.ok(service.getUsername(username));
     }
 
-    @Override
-    public ResponseEntity<UserResponse> getUserById() {
-        return null;
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUserById(Long id) {
+        return ResponseEntity.ok(service.getUserById(id));
     }
 
-    @Override
+
     public ResponseEntity<UserResponse> createUser(UserRequest userRequest) {
         return null;
     }
 
-    @Override
     public ResponseEntity<UserResponse> updateUser(UserRequest userRequest) {
         return null;
     }
 
-    @Override
     public void deleteUser(String username) {
 
     }

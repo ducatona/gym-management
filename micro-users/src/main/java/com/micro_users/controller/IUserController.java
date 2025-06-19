@@ -10,7 +10,7 @@ public interface IUserController {
 
     ResponseEntity<List<UserResponse>> getAllUsers();
     ResponseEntity<UserResponse> getUserByUsername(String username);
-    ResponseEntity<UserResponse> getUserById();
+    ResponseEntity<UserResponse> getUserById(Long id);
     ResponseEntity<UserResponse> createUser(UserRequest userRequest);
     ResponseEntity<UserResponse> updateUser(UserRequest userRequest);
     void deleteUser(String username);
