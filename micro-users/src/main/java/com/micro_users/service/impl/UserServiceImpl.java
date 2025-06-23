@@ -4,8 +4,11 @@ import com.micro_users.mapper.UserMapper;
 import com.micro_users.model.dto.request.UserRequest;
 import com.micro_users.model.dto.response.UserResponse;
 import com.micro_users.repository.IUserRepository;
+import com.micro_users.repository.Role;
+import com.micro_users.repository.User;
 import com.micro_users.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +16,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements IUserService {
 
-
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Autowired
     IUserRepository repository;
     @Autowired
@@ -32,16 +36,32 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserResponse getUserById(Long id) {
-        return null;
+        return mapper.toResponse(repository.findById(id).orElseThrow());
     }
 
     @Override
     public UserResponse createUser(UserRequest userRequest) {
-        return null;
+
+        if(repository.findByUsername(userRequest.getUsername()) != null){
+            System.out.println("aqui va una excepcion personalizada");
+        }
+
+        User newUser = new User();
+        newUser.setUsername(userRequest.getUsername());
+        newUser.setEmail(userRequest.getEmail());
+        newUser.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        newUser.setRole(Role.USER);
+
+
+        return mapper.toResponse(newUser);
+
     }
 
     @Override
     public void deleteUser(Long idUser) {
+
+        User userFound =  repository.findById(idUser).orElseThrow();
+        repository.deleteById(userFound.getId());
 
     }
 }
